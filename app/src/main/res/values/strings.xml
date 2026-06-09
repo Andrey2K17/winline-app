@@ -7,4 +7,5 @@
     <string name="no_live_events">No live events</string>
     <string name="failed_to_load_events">Failed to load events</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="blink_animation">blink_animation</string>
 </resources>

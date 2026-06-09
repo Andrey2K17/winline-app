@@ -9,17 +9,21 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import ru.grinin.winlineapp.data.datasource.remote.ApiService
 import ru.grinin.winlineapp.data.interceptors.AuthInterceptor
 import ru.grinin.winlineapp.data.interceptors.LoggingInterceptor
+import ru.grinin.winlineapp.data.socket.SocketService
 import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "https://kz.stage.sxl.bet/"
 private const val CONNECT_TIMEOUT = 30L
 private const val READ_TIMEOUT = 30L
 
-private val json = Json {
-    ignoreUnknownKeys = true
-}
 
 val networkModule = module {
+
+    single {
+        Json {
+            ignoreUnknownKeys = true
+        }
+    }
 
     single { AuthInterceptor() }
     single { LoggingInterceptor() }
@@ -36,11 +40,13 @@ val networkModule = module {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
             .build()
 
     }
 
     single<ApiService> { get<Retrofit>().create(ApiService::class.java) }
+
+    single { SocketService() }
 
 }

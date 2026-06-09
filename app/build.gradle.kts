@@ -67,13 +67,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    //navigation
+    // Navigation
     implementation(libs.androidx.navigation.compose)
 
-    //network
+    // Network
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
     implementation(libs.okhttp.logging)
+
+    // Socket
+    implementation(libs.socketio)
 
     // Serialization
     implementation(libs.serialization.json)
