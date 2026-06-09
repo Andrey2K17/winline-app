@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WinlineApp</string>
+    <string name="live_events">Live Events</string>
+    <string name="refresh">Refresh</string>
+    <string name="error_loading_events">Error loading events</string>
+    <string name="retry">Retry</string>
+    <string name="no_live_events">No live events</string>
+    <string name="failed_to_load_events">Failed to load events</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>
