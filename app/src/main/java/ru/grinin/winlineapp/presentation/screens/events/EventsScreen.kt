@@ -1,9 +1,10 @@
-package ru.grinin.winlineapp.presentation.screens
+package ru.grinin.winlineapp.presentation.screens.events
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +54,8 @@ import ru.grinin.winlineapp.presentation.viewmodel.EventsViewModel
 @Composable
 fun EventsScreen(
     modifier: Modifier = Modifier,
-    viewModel: EventsViewModel = koinViewModel<EventsViewModel>()
+    viewModel: EventsViewModel = koinViewModel<EventsViewModel>(),
+    navigateToDetails: (Long) -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -83,6 +85,7 @@ fun EventsScreen(
                 is EventsUiState.Success -> {
                     EventsListContent(
                         pagingItems = pagingItems,
+                        onItemClick = navigateToDetails,
                     )
                 }
             }
@@ -93,6 +96,7 @@ fun EventsScreen(
 @Composable
 fun EventsListContent(
     pagingItems: LazyPagingItems<EventVO>,
+    onItemClick: (Long) -> Unit,
 ) {
 
     when {
@@ -110,6 +114,7 @@ fun EventsListContent(
         else -> {
             EventList(
                 pagingItems = pagingItems,
+                onItemClick = onItemClick,
             )
         }
     }
@@ -134,6 +139,7 @@ fun EventTopBar(onRefresh: () -> Unit) {
 @Composable
 fun EventList(
     pagingItems: LazyPagingItems<EventVO>,
+    onItemClick: (Long) -> Unit,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
@@ -146,6 +152,7 @@ fun EventList(
             pagingItems[index]?.let { event ->
                 EventCard(
                     event = event,
+                    onClick = onItemClick,
                 )
             }
         }
@@ -161,6 +168,7 @@ fun EventList(
 @Composable
 fun EventCard(
     event: EventVO,
+    onClick: (Long) -> Unit,
 ) {
     val backgroundColor by animateColorAsState(
         targetValue = if (event.isBlinking) Color.Green else Color.White,
@@ -173,6 +181,7 @@ fun EventCard(
 
     Card(
         modifier = Modifier
+            .clickable { onClick(event.id) }
             .fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),

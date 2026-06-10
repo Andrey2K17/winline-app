@@ -9,6 +9,7 @@ import ru.grinin.winlineapp.data.di.eventMapperModule
 import ru.grinin.winlineapp.data.di.eventRemoteDataSourceModule
 import ru.grinin.winlineapp.data.di.eventRepositoryModule
 import ru.grinin.winlineapp.data.di.networkModule
+import ru.grinin.winlineapp.presentation.viewmodel.eventDetailsViewModelModule
 import ru.grinin.winlineapp.presentation.viewmodel.eventsViewModelModule
 import ru.grinin.winlineapp.utils.di.utilsModule
 
@@ -26,6 +27,7 @@ class Application: Application() {
                 eventRemoteDataSourceModule,
                 eventRepositoryModule,
                 eventsViewModelModule,
+                eventDetailsViewModelModule,
                 eventMapperModule,
                 utilsModule,
             )

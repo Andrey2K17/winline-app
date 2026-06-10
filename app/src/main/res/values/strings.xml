@@ -20,4 +20,7 @@
     <string name="error_too_many_requests">Too many requests. Please try again later</string>
     <string name="error_network">Network error</string>
     <string name="unknown_error">Unknown error</string>
+    <string name="empty_event_details">Empty event details</string>
+    <string name="market_id">Market ID: %1$d</string>
+    <string name="markets">Markets</string>
 </resources>

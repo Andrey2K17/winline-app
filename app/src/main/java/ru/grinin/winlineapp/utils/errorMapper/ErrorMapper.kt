@@ -1,11 +1,11 @@
-package ru.grinin.winlineapp.utils
+package ru.grinin.winlineapp.utils.errorMapper
 
-import ru.grinin.winlineapp.R
 import retrofit2.HttpException
+import ru.grinin.winlineapp.R
+import ru.grinin.winlineapp.utils.ResourceManager
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-
 
 class ErrorMapper(
     private val resourceManager: ResourceManager
@@ -33,6 +33,4 @@ class ErrorMapper(
             else -> resourceManager.getString(R.string.error_network)
         }
     }
-
-
 }

@@ -11,6 +11,7 @@ import ru.grinin.winlineapp.data.datasource.local.EventLocalDataSource
 import ru.grinin.winlineapp.data.datasource.remote.EventRemoteDataSource
 import ru.grinin.winlineapp.data.mapper.DataToEntityMapper
 import ru.grinin.winlineapp.data.models.local.EventEntity
+import ru.grinin.winlineapp.data.models.remote.eventdetails.EventDetailsDto
 import ru.grinin.winlineapp.domain.repository.EventRepository
 
 class EventRepositoryImpl(
@@ -44,5 +45,9 @@ class EventRepositoryImpl(
         ).flow.map { pagingData ->
             pagingData.map { it }
         }
+    }
+
+    override suspend fun getEventDetails(eventId: Long): EventDetailsDto? {
+        return remoteDataSource.getEventById(eventId)
     }
 }

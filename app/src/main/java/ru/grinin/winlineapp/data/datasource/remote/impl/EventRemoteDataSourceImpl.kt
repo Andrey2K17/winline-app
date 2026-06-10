@@ -4,6 +4,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import ru.grinin.winlineapp.data.datasource.remote.ApiService
 import ru.grinin.winlineapp.data.datasource.remote.EventRemoteDataSource
+import ru.grinin.winlineapp.data.models.remote.eventdetails.EventDetailsDto
+import ru.grinin.winlineapp.data.models.remote.eventdetails.request.EventByIdRequest
+import ru.grinin.winlineapp.data.models.remote.eventdetails.request.EventIdQuery
+import ru.grinin.winlineapp.data.models.remote.eventdetails.request.IdFilterDetails
+import ru.grinin.winlineapp.data.models.remote.eventdetails.request.MarketsFilterDetails
+import ru.grinin.winlineapp.data.models.remote.eventdetails.request.WithQueryDetails
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.EventsRequest
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.IdFilter
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.MarketsFilter
@@ -44,6 +50,26 @@ class EventRemoteDataSourceImpl(
 
     override suspend fun getSports(): SportResponseDto {
         return apiService.getSportsTree()
+    }
+
+    override suspend fun getEventById(eventId: Long): EventDetailsDto? {
+        val request = EventByIdRequest(
+            query = EventIdQuery(id = eventId),
+            with = listOf(
+                "markets", "competitors", "match", "activeMarketsCount",
+                "t_settings", "sport", "category", "tournament"
+            ),
+            withQuery = WithQueryDetails(
+                markets = MarketsFilterDetails(
+                    id = IdFilterDetails(
+                        `in` = getMarketIds()
+                    )
+                )
+            )
+        )
+
+        val response = apiService.getEventById(request)
+        return response.firstOrNull()
     }
 
     private fun getMarketIds(): List<Int> = listOf(

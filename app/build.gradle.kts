@@ -86,6 +86,9 @@ dependencies {
     implementation(libs.retrofit.converter)
     implementation(libs.okhttp.logging)
 
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
     // Socket
     implementation(libs.socketio)
 

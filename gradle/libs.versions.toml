@@ -19,7 +19,7 @@ room = "2.8.4"
 ksp = "2.2.10-2.0.2"
 paging = "3.3.6"
 socketio = "2.1.2"
-kotlinxCollectionsImmutable = "0.5.0"
+navigation = "2.9.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +50,9 @@ retrofit-converter = { module = "com.squareup.retrofit2:converter-kotlinx-serial
 # --- Coroutines ---
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+
+# Navigation
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 
 #Koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }

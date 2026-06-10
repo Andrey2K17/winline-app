@@ -20,7 +20,7 @@ import ru.grinin.winlineapp.domain.repository.SocketRepository
 import ru.grinin.winlineapp.presentation.mapper.EventUiMapper
 import ru.grinin.winlineapp.presentation.state.EventVO
 import ru.grinin.winlineapp.presentation.state.EventsUiState
-import ru.grinin.winlineapp.utils.ErrorMapper
+import ru.grinin.winlineapp.utils.errorMapper.ErrorMapper
 import kotlin.coroutines.cancellation.CancellationException
 
 class EventsViewModel(
