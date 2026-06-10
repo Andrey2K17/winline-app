@@ -2,9 +2,11 @@ package ru.grinin.winlineapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +20,7 @@ import ru.grinin.winlineapp.domain.repository.EventRepository
 import ru.grinin.winlineapp.domain.repository.SocketRepository
 import ru.grinin.winlineapp.presentation.mapper.EventUiMapper
 import ru.grinin.winlineapp.presentation.state.BlinkingState
+import ru.grinin.winlineapp.presentation.state.EventVO
 import ru.grinin.winlineapp.presentation.state.EventsUiState
 import ru.grinin.winlineapp.utils.ResourceManager
 import kotlin.coroutines.cancellation.CancellationException
@@ -32,6 +35,15 @@ class EventsViewModel(
     private val _uiState = MutableStateFlow<EventsUiState>(EventsUiState.Loading)
     val uiState: StateFlow<EventsUiState> = _uiState.asStateFlow()
 
+    val pagingItems: Flow<PagingData<EventVO>> = eventRepository
+        .getLiveEvents()
+        .map { pagingData ->
+            pagingData.map { entity ->
+                eventUiMapper.toUiModel(entity)
+            }
+        }
+        .cachedIn(viewModelScope)
+
     private val _blinkingState = MutableStateFlow(BlinkingState())
     val blinkingState: StateFlow<BlinkingState> = _blinkingState.asStateFlow()
 
@@ -45,14 +57,7 @@ class EventsViewModel(
             _uiState.value = EventsUiState.Loading
             try {
                 eventRepository.refreshEvents()
-                val pagingData = eventRepository.getLiveEvents()
-                    .map { pagingData ->
-                        pagingData.map { entity ->
-                            eventUiMapper.toUiModel(entity)
-                        }
-                    }
-                    .cachedIn(viewModelScope)
-                _uiState.value = EventsUiState.Success(pagingData)
+                _uiState.value = EventsUiState.Success
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {

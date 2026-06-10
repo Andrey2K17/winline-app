@@ -37,10 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.flow.Flow
+import kotlinx.collections.immutable.ImmutableSet
 import org.koin.androidx.compose.koinViewModel
 import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.presentation.components.ErrorScreen
@@ -60,6 +59,7 @@ fun EventsScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val blinkingState by viewModel.blinkingState.collectAsStateWithLifecycle()
+    val pagingItems = viewModel.pagingItems.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = { EventTopBar(onRefresh = viewModel::refresh) }
@@ -84,7 +84,7 @@ fun EventsScreen(
 
                 is EventsUiState.Success -> {
                     EventsListContent(
-                        pagingData = state.events,
+                        pagingItems = pagingItems,
                         blinkingEventIds = blinkingState.blinkingEventIds
                     )
                 }
@@ -95,10 +95,9 @@ fun EventsScreen(
 
 @Composable
 fun EventsListContent(
-    pagingData: Flow<PagingData<EventVO>>,
-    blinkingEventIds: Set<Long>,
+    pagingItems: LazyPagingItems<EventVO>,
+    blinkingEventIds: ImmutableSet<Long>,
 ) {
-    val pagingItems = pagingData.collectAsLazyPagingItems()
 
     when {
         pagingItems.loadState.refresh is LoadState.Loading -> {
@@ -119,7 +118,6 @@ fun EventsListContent(
             )
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -141,7 +139,7 @@ fun EventTopBar(onRefresh: () -> Unit) {
 @Composable
 fun EventList(
     pagingItems: LazyPagingItems<EventVO>,
-    blinkingEventIds: Set<Long>,
+    blinkingEventIds: ImmutableSet<Long>,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),

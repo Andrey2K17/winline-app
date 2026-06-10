@@ -19,6 +19,7 @@ room = "2.8.4"
 ksp = "2.2.10-2.0.2"
 paging = "3.3.6"
 socketio = "2.1.2"
+kotlinxCollectionsImmutable = "0.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -67,6 +68,9 @@ socketio = { group = "io.socket", name = "socket.io-client", version.ref = "sock
 # Paging
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+
+# Immutable collections
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
