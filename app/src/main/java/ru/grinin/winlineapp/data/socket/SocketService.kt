@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import ru.grinin.winlineapp.BuildConfig
 
 
 class SocketService {
@@ -56,7 +57,7 @@ class SocketService {
                 query = SocketConstants.SOCKET_QUERY
             }
 
-            socket = IO.socket(SocketConstants.SOCKET_URL, options)
+            socket = IO.socket(BuildConfig.BASE_URL, options)
 
             setupListeners()
             socket?.connect()

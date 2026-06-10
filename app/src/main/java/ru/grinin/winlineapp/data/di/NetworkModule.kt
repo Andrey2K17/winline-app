@@ -6,13 +6,13 @@ import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import ru.grinin.winlineapp.BuildConfig
 import ru.grinin.winlineapp.data.datasource.remote.ApiService
 import ru.grinin.winlineapp.data.interceptors.AuthInterceptor
 import ru.grinin.winlineapp.data.interceptors.LoggingInterceptor
 import ru.grinin.winlineapp.data.socket.SocketService
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "https://kz.stage.sxl.bet/"
 private const val CONNECT_TIMEOUT = 30L
 private const val READ_TIMEOUT = 30L
 
@@ -38,7 +38,7 @@ val networkModule = module {
 
 
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(get<Json>().asConverterFactory("application/json".toMediaType()))
             .build()

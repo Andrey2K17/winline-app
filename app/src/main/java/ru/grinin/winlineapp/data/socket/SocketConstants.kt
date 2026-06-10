@@ -8,7 +8,6 @@ object SocketConstants {
     const val EVENT_FIXTURE_CHANGE = "sb_fixture_change"
     const val EVENT_BET_STOP = "sb_bet_stop"
 
-    const val SOCKET_URL = "https://kz.stage.sxl.bet"
     const val SOCKET_PATH = "/ws"
     const val SOCKET_QUERY = "EIO=4"
     const val TRANSPORT_WEBSOCKET = "websocket"
