@@ -6,6 +6,18 @@
     <string name="retry">Retry</string>
     <string name="no_live_events">No live events</string>
     <string name="failed_to_load_events">Failed to load events</string>
-    <string name="unknown_error">Unknown error</string>
     <string name="blink_animation">blink_animation</string>
+
+    <!-- Errors -->
+    <string name="error_unauthorized">Unauthorized access</string>
+    <string name="error_forbidden">Access denied</string>
+    <string name="error_not_found">Data not found</string>
+    <string name="error_bad_request">Invalid request</string>
+    <string name="error_timeout">Request timeout</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_connection">Connection error</string>
+    <string name="error_server">Server error. Please try again later</string>
+    <string name="error_too_many_requests">Too many requests. Please try again later</string>
+    <string name="error_network">Network error</string>
+    <string name="unknown_error">Unknown error</string>
 </resources>

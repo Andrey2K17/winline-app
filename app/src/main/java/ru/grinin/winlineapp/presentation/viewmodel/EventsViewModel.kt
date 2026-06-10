@@ -15,20 +15,19 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.domain.repository.EventRepository
 import ru.grinin.winlineapp.domain.repository.SocketRepository
 import ru.grinin.winlineapp.presentation.mapper.EventUiMapper
 import ru.grinin.winlineapp.presentation.state.EventVO
 import ru.grinin.winlineapp.presentation.state.EventsUiState
-import ru.grinin.winlineapp.utils.ResourceManager
+import ru.grinin.winlineapp.utils.ErrorMapper
 import kotlin.coroutines.cancellation.CancellationException
 
 class EventsViewModel(
     private val eventRepository: EventRepository,
     private val socketRepository: SocketRepository,
     private val eventUiMapper: EventUiMapper,
-    private val resourceManager: ResourceManager,
+    private val errorMapper: ErrorMapper,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<EventsUiState>(EventsUiState.Loading)
@@ -61,7 +60,7 @@ class EventsViewModel(
                 throw e
             } catch (e: Exception) {
                 _uiState.value = EventsUiState.Error(
-                    e.message ?: resourceManager.getString(R.string.unknown_error)
+                    errorMapper.getMessage(e)
                 )
             }
         }
@@ -109,7 +108,7 @@ val eventsViewModelModule = module {
             eventRepository = get(),
             socketRepository = get(),
             eventUiMapper = get(),
-            resourceManager = get(),
+            errorMapper = get(),
         )
     }
     single {
