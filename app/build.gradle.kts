@@ -67,9 +67,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
-
     // Network
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
