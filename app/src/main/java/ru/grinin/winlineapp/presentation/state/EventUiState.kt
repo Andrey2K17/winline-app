@@ -11,4 +11,5 @@ data class EventVO(
     val homeTeamName: String,
     val awayTeamName: String,
     val fullPath: String,
+    val isBlinking: Boolean = false,
 )

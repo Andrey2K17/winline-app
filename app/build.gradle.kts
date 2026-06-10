@@ -72,8 +72,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.runtime)
 
-    implementation(libs.kotlinx.collections.immutable)
-
     implementation(libs.coroutines.android)
 
     implementation(libs.androidx.lifecycle.runtime.ktx)

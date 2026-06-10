@@ -7,7 +7,7 @@ import ru.grinin.winlineapp.presentation.state.EventVO
 class EventUiMapper(
     private val sportsCache: SportsCache,
 ) {
-    fun toUiModel(entity: EventEntity): EventVO {
+    fun toUiModel(entity: EventEntity, isBlinking: Boolean): EventVO {
         val fullPath = sportsCache.getFullPath(
             entity.sportId,
             entity.categoryId,
@@ -18,7 +18,8 @@ class EventUiMapper(
             id = entity.id,
             homeTeamName = entity.homeTeamName,
             awayTeamName = entity.awayTeamName,
-            fullPath = fullPath
+            fullPath = fullPath,
+            isBlinking = isBlinking
         )
     }
 }

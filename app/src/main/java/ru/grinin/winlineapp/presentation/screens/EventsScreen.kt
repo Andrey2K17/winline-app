@@ -39,7 +39,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.collections.immutable.ImmutableSet
 import org.koin.androidx.compose.koinViewModel
 import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.presentation.components.ErrorScreen
@@ -58,7 +57,6 @@ fun EventsScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val blinkingState by viewModel.blinkingState.collectAsStateWithLifecycle()
     val pagingItems = viewModel.pagingItems.collectAsLazyPagingItems()
 
     Scaffold(
@@ -85,7 +83,6 @@ fun EventsScreen(
                 is EventsUiState.Success -> {
                     EventsListContent(
                         pagingItems = pagingItems,
-                        blinkingEventIds = blinkingState.blinkingEventIds
                     )
                 }
             }
@@ -96,7 +93,6 @@ fun EventsScreen(
 @Composable
 fun EventsListContent(
     pagingItems: LazyPagingItems<EventVO>,
-    blinkingEventIds: ImmutableSet<Long>,
 ) {
 
     when {
@@ -114,7 +110,6 @@ fun EventsListContent(
         else -> {
             EventList(
                 pagingItems = pagingItems,
-                blinkingEventIds = blinkingEventIds
             )
         }
     }
@@ -139,7 +134,6 @@ fun EventTopBar(onRefresh: () -> Unit) {
 @Composable
 fun EventList(
     pagingItems: LazyPagingItems<EventVO>,
-    blinkingEventIds: ImmutableSet<Long>,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
@@ -152,7 +146,6 @@ fun EventList(
             pagingItems[index]?.let { event ->
                 EventCard(
                     event = event,
-                    isBlinking = blinkingEventIds.contains(event.id)
                 )
             }
         }
@@ -168,10 +161,9 @@ fun EventList(
 @Composable
 fun EventCard(
     event: EventVO,
-    isBlinking: Boolean,
 ) {
     val backgroundColor by animateColorAsState(
-        targetValue = if (isBlinking) Color.Green else Color.White,
+        targetValue = if (event.isBlinking) Color.Green else Color.White,
         animationSpec = tween(
             durationMillis = 500,
             easing = FastOutSlowInEasing

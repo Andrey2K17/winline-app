@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,7 +19,6 @@ import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.domain.repository.EventRepository
 import ru.grinin.winlineapp.domain.repository.SocketRepository
 import ru.grinin.winlineapp.presentation.mapper.EventUiMapper
-import ru.grinin.winlineapp.presentation.state.BlinkingState
 import ru.grinin.winlineapp.presentation.state.EventVO
 import ru.grinin.winlineapp.presentation.state.EventsUiState
 import ru.grinin.winlineapp.utils.ResourceManager
@@ -35,17 +34,17 @@ class EventsViewModel(
     private val _uiState = MutableStateFlow<EventsUiState>(EventsUiState.Loading)
     val uiState: StateFlow<EventsUiState> = _uiState.asStateFlow()
 
-    val pagingItems: Flow<PagingData<EventVO>> = eventRepository
-        .getLiveEvents()
-        .map { pagingData ->
-            pagingData.map { entity ->
-                eventUiMapper.toUiModel(entity)
-            }
-        }
-        .cachedIn(viewModelScope)
+    private val _blinkingEventIds = MutableStateFlow<Set<Long>>(emptySet())
 
-    private val _blinkingState = MutableStateFlow(BlinkingState())
-    val blinkingState: StateFlow<BlinkingState> = _blinkingState.asStateFlow()
+    val pagingItems: Flow<PagingData<EventVO>> =
+        eventRepository.getLiveEvents()
+            .cachedIn(viewModelScope)
+            .combine(_blinkingEventIds) { pagingData, blinkingIds ->
+                pagingData.map { entity ->
+                    eventUiMapper.toUiModel(entity, blinkingIds.contains(entity.id))
+                }
+            }
+            .cachedIn(viewModelScope)
 
     init {
         loadEvents()
@@ -82,14 +81,14 @@ class EventsViewModel(
 
     private fun triggerBlink(eventId: Long) {
         viewModelScope.launch {
-            _blinkingState.update { state ->
-                state.addBlinkingEvent(eventId)
+            _blinkingEventIds.update { currentSet ->
+                currentSet + eventId
             }
 
             delay(3000)
 
-            _blinkingState.update { state ->
-                state.removeBlinkingEvent(eventId)
+            _blinkingEventIds.update { currentSet ->
+                currentSet - eventId
             }
         }
     }
