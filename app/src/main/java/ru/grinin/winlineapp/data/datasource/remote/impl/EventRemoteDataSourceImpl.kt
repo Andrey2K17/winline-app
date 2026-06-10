@@ -11,6 +11,7 @@ import ru.grinin.winlineapp.data.models.remote.eventsrequest.Query
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.Scheduled
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.WithQuery
 import ru.grinin.winlineapp.data.models.remote.eventsresponse.EventsResponseDto
+import ru.grinin.winlineapp.data.models.remote.sport.SportResponseDto
 import java.time.Duration
 import java.time.Instant
 
@@ -39,6 +40,10 @@ class EventRemoteDataSourceImpl(
         )
 
         return apiService.getEvents(request)
+    }
+
+    override suspend fun getSports(): SportResponseDto {
+        return apiService.getSportsTree()
     }
 
     private fun getMarketIds(): List<Int> = listOf(

@@ -108,5 +108,9 @@ val eventsViewModelModule = module {
             resourceManager = get(),
         )
     }
-    single { EventUiMapper() }
+    single {
+        EventUiMapper(
+            sportsCache = get(),
+        )
+    }
 }

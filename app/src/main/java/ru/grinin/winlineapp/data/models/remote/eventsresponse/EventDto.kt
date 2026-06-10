@@ -14,6 +14,15 @@ data class EventDto(
     @SerialName("scheduled")
     val scheduled: Long,
 
+    @SerialName("sport_id")
+    val sportId: Int,
+
+    @SerialName("category_id")
+    val categoryId: Int,
+
+    @SerialName("tournament_id")
+    val tournamentId: Int,
+
     @SerialName("competitors")
     val competitors: List<CompetitorDto>?
 )

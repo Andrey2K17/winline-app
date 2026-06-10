@@ -199,6 +199,8 @@ fun EventCard(
             TeamNameText(name = event.homeTeamName)
             Spacer(modifier = Modifier.height(4.dp))
             TeamNameText(name = event.awayTeamName)
+            Spacer(modifier = Modifier.height(4.dp))
+            TeamNameText(name = event.fullPath)
         }
     }
 }

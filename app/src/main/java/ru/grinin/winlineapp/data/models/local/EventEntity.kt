@@ -9,7 +9,8 @@ data class EventEntity(
     val id: Long,
     val scheduled: Long,
     val homeTeamName: String,
-    val homeTeamImage: String?,
     val awayTeamName: String,
-    val awayTeamImage: String?,
+    val sportId: Int,
+    val categoryId: Int,
+    val tournamentId: Int,
 )

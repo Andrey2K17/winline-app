@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ru.grinin.winlineapp.data.cache.SportsCache
 import ru.grinin.winlineapp.data.datasource.local.EventLocalDataSource
 import ru.grinin.winlineapp.data.datasource.remote.EventRemoteDataSource
 import ru.grinin.winlineapp.data.mapper.DataToEntityMapper
@@ -16,10 +17,15 @@ class EventRepositoryImpl(
     private val remoteDataSource: EventRemoteDataSource,
     private val localDataSource: EventLocalDataSource,
     private val dataToEntityMapper: DataToEntityMapper,
+    private val sportsCache: SportsCache,
+
 ) : EventRepository {
 
     override suspend fun refreshEvents() {
         val allEvents = remoteDataSource.getEvents()
+
+        val allSports = remoteDataSource.getSports()
+        sportsCache.updateCache(allSports)
 
         val liveEvents = allEvents
             .filter { it.status == 1 }

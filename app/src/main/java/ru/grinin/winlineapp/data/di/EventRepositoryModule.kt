@@ -12,6 +12,7 @@ val eventRepositoryModule = module {
             remoteDataSource = get(),
             localDataSource = get(),
             dataToEntityMapper = get(),
+            sportsCache = get(),
         )
     }
     single <SocketRepository> {

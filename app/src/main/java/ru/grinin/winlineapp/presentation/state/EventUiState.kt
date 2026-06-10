@@ -13,4 +13,5 @@ data class EventVO(
     val id: Long,
     val homeTeamName: String,
     val awayTeamName: String,
+    val fullPath: String,
 )
