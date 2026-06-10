@@ -23,4 +23,5 @@
     <string name="empty_event_details">Empty event details</string>
     <string name="market_id">Market ID: %1$d</string>
     <string name="markets">Markets</string>
+    <string name="indicator">indicator</string>
 </resources>

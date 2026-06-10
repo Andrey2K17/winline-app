@@ -11,7 +11,7 @@ import ru.grinin.winlineapp.presentation.models.OutcomeMetaDetailsVO
 import ru.grinin.winlineapp.utils.errorMapper.EmptyEventDetailsException
 
 
-class EventDetailsMapper {
+class EventDetailsUiMapper {
 
     fun toUiModel(dto: EventDetailsDto?): EventDetailsVO {
         if (dto == null) throw EmptyEventDetailsException()

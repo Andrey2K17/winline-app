@@ -17,9 +17,6 @@ data class EventDetailsDto(
     @SerialName("igame")
     val igame: IGameDto? = null,
 
-    @SerialName("match")
-    val match: MatchDetailsDto? = null,
-
     @SerialName("state")
     val state: Int? = null,
 

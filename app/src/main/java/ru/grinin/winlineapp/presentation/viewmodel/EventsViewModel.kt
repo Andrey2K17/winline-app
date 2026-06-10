@@ -13,8 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
 import ru.grinin.winlineapp.domain.repository.EventRepository
 import ru.grinin.winlineapp.domain.repository.SocketRepository
 import ru.grinin.winlineapp.presentation.mapper.EventUiMapper
@@ -99,21 +97,5 @@ class EventsViewModel(
     override fun onCleared() {
         super.onCleared()
         socketRepository.disconnect()
-    }
-}
-
-val eventsViewModelModule = module {
-    viewModel {
-        EventsViewModel(
-            eventRepository = get(),
-            socketRepository = get(),
-            eventUiMapper = get(),
-            errorMapper = get(),
-        )
-    }
-    single {
-        EventUiMapper(
-            sportsCache = get(),
-        )
     }
 }

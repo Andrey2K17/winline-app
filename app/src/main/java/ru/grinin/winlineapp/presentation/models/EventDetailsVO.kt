@@ -18,13 +18,22 @@ data class MarketDetailsVO(
     val outcomes: List<OutcomeDetailsVO>
 )
 
+enum class OddsChangeDirection {
+    UP,
+    DOWN,
+    NONE
+}
+
 data class OutcomeDetailsVO(
     val id: Int,
     val meta: OutcomeMetaDetailsVO,
     val odds: Double,
+    val previousOdds: Double? = null,
     val type: String,
     val state: Int,
-    val active: Boolean
+    val active: Boolean,
+    val isBlinking: Boolean = false,
+    val changeDirection: OddsChangeDirection = OddsChangeDirection.NONE,
 )
 data class OutcomeMetaDetailsVO(
     val ratioIndex: Int
