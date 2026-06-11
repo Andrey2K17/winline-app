@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import ru.grinin.winlineapp.domain.repository.EventRepository
 import ru.grinin.winlineapp.domain.repository.SocketRepository
 import ru.grinin.winlineapp.presentation.mapper.EventUiMapper
-import ru.grinin.winlineapp.presentation.state.EventVO
+import ru.grinin.winlineapp.presentation.models.EventVO
 import ru.grinin.winlineapp.presentation.state.EventsUiState
 import ru.grinin.winlineapp.utils.errorMapper.ErrorMapper
 import kotlin.coroutines.cancellation.CancellationException

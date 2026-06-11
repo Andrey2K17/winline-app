@@ -2,7 +2,7 @@ package ru.grinin.winlineapp.presentation.mapper
 
 import ru.grinin.winlineapp.data.cache.SportsCache
 import ru.grinin.winlineapp.data.models.local.EventEntity
-import ru.grinin.winlineapp.presentation.state.EventVO
+import ru.grinin.winlineapp.presentation.models.EventVO
 
 class EventUiMapper(
     private val sportsCache: SportsCache,

@@ -45,7 +45,7 @@ import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.presentation.components.ErrorScreen
 import ru.grinin.winlineapp.presentation.components.LoadingFooter
 import ru.grinin.winlineapp.presentation.components.LoadingState
-import ru.grinin.winlineapp.presentation.state.EventVO
+import ru.grinin.winlineapp.presentation.models.EventVO
 import ru.grinin.winlineapp.presentation.state.EventsUiState
 import ru.grinin.winlineapp.presentation.viewmodel.EventsViewModel
 
