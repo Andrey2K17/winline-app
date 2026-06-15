@@ -36,6 +36,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -44,15 +45,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import org.koin.androidx.compose.koinViewModel
 import ru.grinin.winlineapp.R
+import ru.grinin.winlineapp.presentation.models.GiftCard
 import ru.grinin.winlineapp.presentation.viewmodel.GiftsViewModel
 import ru.grinin.winlineapp.ui.theme.WinlineAppTheme
 import ru.grinin.winlineapp.utils.toHmsFormat
 
-
-data class GiftCard(
-    val id: Int,
-    val isFlipped: Boolean = false
-)
 
 @Composable
 fun GiftsScreen(
@@ -161,6 +158,7 @@ fun GiftItemsContent(
                     snowRes = snowRes,
                     snowOffsetY = snowOffsetY,
                     snowAlignment = snowAlignment,
+                    title = card.title,
                 )
             }
         }
@@ -177,11 +175,12 @@ fun GiftsItem(
     snowRes: Int,
     snowOffsetY: Dp,
     snowAlignment: Alignment,
+    title: String,
 ) {
     val rotation by animateFloatAsState(
         targetValue = if (isFlipped) 180f else 0f,
         animationSpec = tween(durationMillis = 2000, easing = FastOutSlowInEasing),
-        label = "Flip"
+        label = stringResource(R.string.flip)
     )
 
     Box(
@@ -214,14 +213,31 @@ fun GiftsItem(
                 )
             }
             if (rotation > 90f) {
-                Image(
-                    painter = painterResource(id = backImageRes),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                Box(
                     modifier = Modifier
                         .fillMaxSize(0.85f)
                         .align(Alignment.Center)
-                )
+                ) {
+                    Image(
+                        painter = painterResource(id = backImageRes),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    Text(
+                        text = title.take(3),
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .graphicsLayer {
+                                rotationY = 180f
+                            }
+                    )
+                }
             }
         }
 
@@ -256,7 +272,8 @@ fun GiftItemPreview() {
             backImageRes = R.drawable.freebet,
             snowRes = R.drawable.snow_left,
             snowOffsetY = (-25).dp,
-            snowAlignment = Alignment.TopStart
+            snowAlignment = Alignment.TopStart,
+            title = "BYN"
         )
     }
 }

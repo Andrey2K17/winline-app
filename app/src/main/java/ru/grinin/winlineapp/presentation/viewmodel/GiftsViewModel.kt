@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.grinin.winlineapp.presentation.screens.gifts.GiftCard
+import ru.grinin.winlineapp.presentation.models.GiftCard
 import ru.grinin.winlineapp.utils.TimerManager
 
 class GiftsViewModel(
