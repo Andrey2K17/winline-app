@@ -143,6 +143,7 @@ fun GiftItemsContent(
                 }
 
                 val snowOffsetY = if (column == 1) -cardSize * 0.07f else -cardSize * 0.03f
+                val snowOffsetX = if (column == 0) -cardSize * 0.03f else 0.dp
                 val snowAlignment = when (column) {
                     0 -> Alignment.TopStart
                     1 -> Alignment.TopCenter
@@ -157,6 +158,7 @@ fun GiftItemsContent(
                     backImageRes = R.drawable.freebet,
                     snowRes = snowRes,
                     snowOffsetY = snowOffsetY,
+                    snowOffsetX = snowOffsetX,
                     snowAlignment = snowAlignment,
                     title = card.title,
                 )
@@ -174,6 +176,7 @@ fun GiftsItem(
     backImageRes: Int,
     snowRes: Int,
     snowOffsetY: Dp,
+    snowOffsetX: Dp = 0.dp,
     snowAlignment: Alignment,
     title: String,
 ) {
@@ -248,7 +251,7 @@ fun GiftsItem(
             modifier = Modifier
                 .align(snowAlignment)
                 .fillMaxWidth(0.85f)
-                .offset(y = snowOffsetY)
+                .offset(y = snowOffsetY, x = snowOffsetX)
         )
     }
 }
