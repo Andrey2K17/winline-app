@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.PersistentList
 import org.koin.androidx.compose.koinViewModel
 import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.presentation.viewmodel.GiftsViewModel
@@ -146,7 +145,12 @@ fun GiftItemsContent(
                     else -> R.drawable.snow_right
                 }
 
-                val snowOffsetY = if (column == 1) -cardSize * 0.09f else -cardSize * 0.06f
+                val snowOffsetY = if (column == 1) -cardSize * 0.07f else -cardSize * 0.03f
+                val snowAlignment = when (column) {
+                    0 -> Alignment.TopStart
+                    1 -> Alignment.TopCenter
+                    else -> Alignment.TopEnd
+                }
 
                 GiftsItem(
                     modifier = Modifier.size(cardSize),
@@ -156,6 +160,7 @@ fun GiftItemsContent(
                     backImageRes = R.drawable.freebet,
                     snowRes = snowRes,
                     snowOffsetY = snowOffsetY,
+                    snowAlignment = snowAlignment,
                 )
             }
         }
@@ -171,6 +176,7 @@ fun GiftsItem(
     backImageRes: Int,
     snowRes: Int,
     snowOffsetY: Dp,
+    snowAlignment: Alignment,
 ) {
     val rotation by animateFloatAsState(
         targetValue = if (isFlipped) 180f else 0f,
@@ -224,7 +230,8 @@ fun GiftsItem(
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .align(Alignment.TopCenter)
+                .align(snowAlignment)
+                .fillMaxWidth(0.85f)
                 .offset(y = snowOffsetY)
         )
     }
@@ -248,7 +255,8 @@ fun GiftItemPreview() {
             frontImageRes = R.drawable.gift_box,
             backImageRes = R.drawable.freebet,
             snowRes = R.drawable.snow_left,
-            snowOffsetY = (-25).dp
+            snowOffsetY = (-25).dp,
+            snowAlignment = Alignment.TopStart
         )
     }
 }
