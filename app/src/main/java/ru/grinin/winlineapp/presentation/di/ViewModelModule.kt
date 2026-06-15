@@ -4,6 +4,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.grinin.winlineapp.presentation.viewmodel.EventDetailsViewModel
 import ru.grinin.winlineapp.presentation.viewmodel.EventsViewModel
+import ru.grinin.winlineapp.presentation.viewmodel.GiftsViewModel
 
 val viewModelModule = module {
     viewModel { params ->
@@ -25,5 +26,9 @@ val viewModelModule = module {
             eventUiMapper = get(),
             errorMapper = get(),
         )
+    }
+
+    viewModel {
+        GiftsViewModel()
     }
 }
