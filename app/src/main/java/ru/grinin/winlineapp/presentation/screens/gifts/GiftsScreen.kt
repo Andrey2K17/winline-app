@@ -38,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -46,9 +45,11 @@ import kotlinx.collections.immutable.ImmutableList
 import org.koin.androidx.compose.koinViewModel
 import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.presentation.models.GiftCard
+import ru.grinin.winlineapp.presentation.models.SnowParams
 import ru.grinin.winlineapp.presentation.viewmodel.GiftsViewModel
 import ru.grinin.winlineapp.ui.theme.WinlineAppTheme
 import ru.grinin.winlineapp.utils.toHmsFormat
+import ru.grinin.winlineapp.utils.toSnowParams
 
 
 @Composable
@@ -136,19 +137,6 @@ fun GiftItemsContent(
         ) {
             items(cards, key = { it.id }) { card ->
                 val column = card.id % 3
-                val snowRes = when (column) {
-                    0 -> R.drawable.snow_left
-                    1 -> R.drawable.snow_center
-                    else -> R.drawable.snow_right
-                }
-
-                val snowOffsetY = if (column == 1) -cardSize * 0.07f else -cardSize * 0.03f
-                val snowOffsetX = if (column == 0) -cardSize * 0.03f else 0.dp
-                val snowAlignment = when (column) {
-                    0 -> Alignment.TopStart
-                    1 -> Alignment.TopCenter
-                    else -> Alignment.TopEnd
-                }
 
                 GiftsItem(
                     modifier = Modifier.size(cardSize),
@@ -156,10 +144,7 @@ fun GiftItemsContent(
                     onClick = { onItemClick(card.id) },
                     frontImageRes = R.drawable.gift_box,
                     backImageRes = R.drawable.freebet,
-                    snowRes = snowRes,
-                    snowOffsetY = snowOffsetY,
-                    snowOffsetX = snowOffsetX,
-                    snowAlignment = snowAlignment,
+                    snowParams = column.toSnowParams(cardSize),
                     title = card.title,
                 )
             }
@@ -174,11 +159,8 @@ fun GiftsItem(
     onClick: () -> Unit,
     frontImageRes: Int,
     backImageRes: Int,
-    snowRes: Int,
-    snowOffsetY: Dp,
-    snowOffsetX: Dp = 0.dp,
-    snowAlignment: Alignment,
     title: String,
+    snowParams: SnowParams,
 ) {
     val rotation by animateFloatAsState(
         targetValue = if (isFlipped) 180f else 0f,
@@ -245,13 +227,13 @@ fun GiftsItem(
         }
 
         Image(
-            painter = painterResource(id = snowRes),
+            painter = painterResource(id = snowParams.imgRes),
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .align(snowAlignment)
+                .align(snowParams.alignment)
                 .fillMaxWidth(0.85f)
-                .offset(y = snowOffsetY, x = snowOffsetX)
+                .offset(y = snowParams.offsetY, x = snowParams.offsetX)
         )
     }
 }
@@ -273,9 +255,7 @@ fun GiftItemPreview() {
             onClick = {},
             frontImageRes = R.drawable.gift_box,
             backImageRes = R.drawable.freebet,
-            snowRes = R.drawable.snow_left,
-            snowOffsetY = (-25).dp,
-            snowAlignment = Alignment.TopStart,
+            snowParams = 1.toSnowParams(60.dp),
             title = "BYN"
         )
     }
