@@ -89,6 +89,8 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.kotlinx.collections.immutable)
+
     // Socket
     implementation(libs.socketio)
 

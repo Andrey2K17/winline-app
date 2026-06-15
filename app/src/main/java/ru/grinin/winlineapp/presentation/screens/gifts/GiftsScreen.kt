@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
 import org.koin.androidx.compose.koinViewModel
 import ru.grinin.winlineapp.R
 import ru.grinin.winlineapp.presentation.viewmodel.GiftsViewModel
@@ -116,7 +118,7 @@ fun Timer(
 @Composable
 fun GiftItemsContent(
     modifier: Modifier = Modifier,
-    cards: List<GiftCard>,
+    cards: ImmutableList<GiftCard>,
     onItemClick: (Int) -> Unit,
 ) {
     BoxWithConstraints(

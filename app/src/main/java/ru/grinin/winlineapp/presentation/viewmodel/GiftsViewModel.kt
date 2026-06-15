@@ -2,6 +2,9 @@ package ru.grinin.winlineapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,13 +18,13 @@ class GiftsViewModel(
 ) : ViewModel() {
 
     private val _cards = MutableStateFlow(createInitialCards())
-    val cards: StateFlow<List<GiftCard>> = _cards.asStateFlow()
+    val cards: StateFlow<ImmutableList<GiftCard>> = _cards.asStateFlow()
 
     private val _timerSeconds = MutableStateFlow<Int?>(null)
     val timerSeconds = _timerSeconds.asStateFlow()
 
-    private fun createInitialCards(): List<GiftCard> {
-        return (0..14).map { index -> GiftCard(id = index) }
+    private fun createInitialCards(): PersistentList<GiftCard> {
+        return (0..14).map { index -> GiftCard(id = index) }.toPersistentList()
     }
 
     init {
@@ -40,13 +43,13 @@ class GiftsViewModel(
         _cards.update { currentCards ->
             currentCards.map { card ->
                 if (card.id == cardId) card.copy(isFlipped = !card.isFlipped) else card
-            }
+            }.toPersistentList()
         }
     }
 
     private fun flipAllCards() {
         _cards.update { currentCards ->
-            currentCards.map { it.copy(isFlipped = false) }
+            currentCards.map { it.copy(isFlipped = false) }.toPersistentList()
         }
     }
 }
