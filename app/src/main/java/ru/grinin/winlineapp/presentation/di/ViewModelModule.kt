@@ -29,6 +29,8 @@ val viewModelModule = module {
     }
 
     viewModel {
-        GiftsViewModel()
+        GiftsViewModel(
+            timerManager = get(),
+        )
     }
 }

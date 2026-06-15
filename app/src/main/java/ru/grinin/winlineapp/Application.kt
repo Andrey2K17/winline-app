@@ -1,6 +1,7 @@
 package ru.grinin.winlineapp
 
 import android.app.Application
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -12,6 +13,7 @@ import ru.grinin.winlineapp.data.di.networkModule
 import ru.grinin.winlineapp.domain.di.useCaseModule
 import ru.grinin.winlineapp.presentation.di.mappersUiModule
 import ru.grinin.winlineapp.presentation.di.viewModelModule
+import ru.grinin.winlineapp.utils.TimerManager
 import ru.grinin.winlineapp.utils.di.utilsModule
 
 class Application: Application() {
@@ -34,5 +36,8 @@ class Application: Application() {
                 useCaseModule,
             )
         }
+
+        val timerManager: TimerManager = get()
+        timerManager.startTimer(10)
     }
 }
