@@ -96,8 +96,7 @@ fun EventDetailsContent(
 ) {
     val groupedMarkets = remember(event.markets) {
         event.markets.groupBy { it.id }
-            .entries
-            .sortedBy { it.key }
+            .toList()
     }
     LazyColumn(
         contentPadding = PaddingValues(8.dp),
