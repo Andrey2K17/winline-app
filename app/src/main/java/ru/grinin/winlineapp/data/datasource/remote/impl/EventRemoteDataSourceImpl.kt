@@ -59,13 +59,6 @@ class EventRemoteDataSourceImpl(
                 "markets", "competitors", "match", "activeMarketsCount",
                 "t_settings", "sport", "category", "tournament"
             ),
-            withQuery = WithQueryDetails(
-                markets = MarketsFilterDetails(
-                    id = IdFilterDetails(
-                        `in` = getMarketIds()
-                    )
-                )
-            )
         )
 
         val response = apiService.getEventById(request)

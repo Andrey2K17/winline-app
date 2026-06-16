@@ -10,7 +10,6 @@ data class EventByIdRequest(
     val query: EventIdQuery,
     @SerialName("with")
     val with: List<String>,
-    val withQuery: WithQueryDetails
 )
 
 @Serializable
