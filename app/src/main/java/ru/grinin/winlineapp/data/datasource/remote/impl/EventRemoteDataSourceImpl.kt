@@ -7,9 +7,6 @@ import ru.grinin.winlineapp.data.datasource.remote.EventRemoteDataSource
 import ru.grinin.winlineapp.data.models.remote.eventdetails.EventDetailsDto
 import ru.grinin.winlineapp.data.models.remote.eventdetails.request.EventByIdRequest
 import ru.grinin.winlineapp.data.models.remote.eventdetails.request.EventIdQuery
-import ru.grinin.winlineapp.data.models.remote.eventdetails.request.IdFilterDetails
-import ru.grinin.winlineapp.data.models.remote.eventdetails.request.MarketsFilterDetails
-import ru.grinin.winlineapp.data.models.remote.eventdetails.request.WithQueryDetails
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.EventsRequest
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.IdFilter
 import ru.grinin.winlineapp.data.models.remote.eventsrequest.MarketsFilter
