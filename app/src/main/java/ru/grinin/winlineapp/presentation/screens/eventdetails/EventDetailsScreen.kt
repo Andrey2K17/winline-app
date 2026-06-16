@@ -169,17 +169,25 @@ private fun MarketGroup(
             AnimatedVisibility(isExpanded) {
                 Column {
                     markets.forEach { market ->
-                        Row(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            market.outcomes.forEach { outcome ->
-                                OutcomeCard(
-                                    outcome = outcome,
-                                    modifier = Modifier.weight(1f)
-                                )
+                        val pairs = market.outcomes.chunked(2)
+
+                        pairs.forEach { pair ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                pair.forEach { outcome ->
+                                    OutcomeCard(
+                                        outcome = outcome,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                }
+
+                                if (pair.size == 1) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.height(12.dp))
